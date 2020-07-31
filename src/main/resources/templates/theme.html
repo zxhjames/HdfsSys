@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>文件系统目录</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+</head>
+<body>
+
+<table border="0.5" align="center">
+    <tr><td colspan="7" align="center">文件目录树</td></tr>
+    <tr>
+        <td colspan="6" align="center">
+            <form action="/create" method="post">
+                <input type="text" name="newfoldername" th:placeholder="输入文件夹名">
+                <input type="text" name="foldername"  th:value="${curDir}" th:type="hidden" >
+                <input type="submit" value="创建">
+            </form>
+        </td>
+    </tr>
+    <tr>
+
+        <td>文件名</td>
+        <td>创建文件夹</td>
+        <td>上传文件</td>
+        <td>下载文件</td>
+        <td>删除文件夹</td>
+    </tr>
+    <tr th:each="file:${list}">
+        <td><a th:href="@{'http://localhost:8080/current?curdir='+${file.getPath().toString().substring(17)}}" th:text="${file.getPath().getName()}"></a></td>
+        <td>
+            <form action="/create" method="post">
+                <input type="text" name="newfoldername" th:placeholder="输入文件夹名">
+                <input type="text" name="foldername"  th:value="${file.getPath().toString().substring(17)}" th:type="hidden" >
+                <input type="submit" value="创建">
+            </form>
+        </td>
+        <td>
+            <form action="/upload" method="post">
+                <input type="text" name="srcpath" th:placeholder="输入本地文件名">
+                <input type="text" name="dstpath"  th:value="${file.getPath().toString().substring(17)}" th:type="hidden" >
+                <input type="submit" value="上传">
+            </form>
+        </td>
+        <td>
+            <form action="/download" method="post">
+                <input type="text" name="srcpath"  th:value="${file.getPath().toString().substring(17)}" th:type="hidden" >
+                <input type="text" name="dstpath" th:placeholder="输入下载位置">
+                <input type="submit" value="下载">
+            </form>
+        </td>
+        <td>
+            <form action="/delete" method="post">
+                <input type="text" name="foldername"  th:value="${file.getPath().toString().substring(17)}" th:type="hidden" >
+                <input type="submit" value="删除">
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

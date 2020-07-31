@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>文件家目录</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+</head>
+<body>
+<a th:href="@{'http://localhost:8080/current?curdir='+${homeDir}}" th:text="${homeDir}"></a>
+</body>
+</html>
